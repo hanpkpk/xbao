@@ -2,3 +2,5 @@ node_modules
 downloads
 nohup.out
 static/css/*.css
+static/img/upload
+static/img/item
