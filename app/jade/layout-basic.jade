@@ -1,0 +1,32 @@
+extends layout
+
+block body
+    nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
+        div.container
+            div#bs-example-navbar-collapse-1.collapse.navbar-collapse
+                ul.nav.navbar-nav.navbar-left
+                    li
+                        a(href="/") 嗨淘网首页
+                ul.nav.navbar-nav.navbar-right
+                    if isAuthenticated
+                        li 
+                            a(href='/user/#{credential.id}') #{credential.name}
+                        li
+                            a.logout.logout-btn(href='/logout',style='margin-left:-12px;') [注销]
+                    else
+                        li
+                            a(href='/') 请登录
+                        li
+                            a(href='/register') 免费注册
+                    li
+                        a(href='#')
+                            i.fa.fa-shopping-cart
+                            |  购物车
+                    li
+                        a(href='#')
+                            i.fa.fa-star  收藏夹
+                    li
+                        a(href='/store/open').bord 我要开店
+                    li
+                        a(href='#') 卖家中心
+    block main

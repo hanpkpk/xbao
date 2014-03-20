@@ -1,0 +1,61 @@
+extends layout-basic
+
+block title
+    | 确认购买
+
+block head
+    link(rel='stylesheet', type='text/css', href='/static/css/buy.css')
+
+block scripts
+    script(type='text/javascript', src='/assest/js/buy.js')
+
+block main
+    include searchbar-partial
+    div.buy-title-bg
+        div.container
+            div.div-title 确认订单
+    div.container
+        div.order-id 订单编号:#{order.id}
+        input#order-id(type='hidden',value='#{order.id}')
+        input#buyer-id(type='hidden',value='#{user.id}')
+        div.order-title.col-xs-12
+            div.col-xs-5
+                div.buy-info-title 商品信息
+            div.col-xs-2
+                div.buy-info-title 单价(元)
+            div.col-xs-2
+                div.buy-info-title 数量
+            div.col-xs-3
+                div.buy-info-title 小计(元)
+        div.buy-store 店铺:
+            a.buy-store-name(href='/store/#{store.id}') #{store.name}
+        div 卖家:#{store.owner.name}
+        div.order-info.col-xs-12
+            div.col-xs-5
+                img.buy-item-img(src='#{item.imageList[0].path}')
+                a(href='/item/#{item.id}') #{item.name}
+            div.col-xs-2
+                div.buy-item-price #{item.price}
+                input#item-price(type='hidden',value='#{item.price}')
+            div.col-xs-2
+                div.buy-input
+                    i.fa.fa-minus-square-o.fa-lg.btn
+                    input#buy-number(type='text',value='#{order.number}')
+                    i.fa.fa-plus-square-o.fa-lg.btn
+            div.col-xs-3
+                div.buy-item-total #{order.price}
+        div.order-buy.col-xs-12
+            div.buy-comment.col-xs-7
+                div 给卖家留言:
+                input#input-comment(type='text')
+            div.buy-price.col-xs-5
+                span 实付款：
+                i.fa.fa-cny
+                span.price #{order.price}
+            div.buy-address.col-xs-12
+                strong 收货地址
+                |：#{user.address}
+            div.buy-name.col-xs-12
+                strong 收货人
+                |：#{user.name}
+        a#buyBtn.btn.btn-primary 确认购买

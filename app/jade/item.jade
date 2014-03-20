@@ -1,0 +1,62 @@
+extends layout-store
+
+block title
+    if item
+        | #{item.name}
+    else
+        | 错误
+
+block css
+    link(rel='stylesheet', type='text/css', href='/static/css/item.css')
+
+block js
+    script(type='text/javascript', src='/assest/js/item.js')
+
+block itempage
+    input#currentItemId(value='#{item.id}',hidden)
+    div.container
+        div.div-item-name #{item.name}
+        div.col-xs-6.nopadding
+            ul.bxslider
+                for imagePath in item.imageList
+                    li
+                        img(src="#{imagePath.path}")
+            div#bx-pager
+                - for (var i = 0;i<item.imageList.length;i++)
+                    a(data-slide-index="#{i}",href="")
+                        img.a-img-thumbnail(src="#{item.imageList[i].path}")
+        div.col-xs-6
+            div.item-group
+                div.group-item-label 价格
+                div.group-item-price 
+                    i.fa.fa-cny
+                    em  #{item.price}
+            div.item-group
+                div.group-item-label 销量
+                div.group-item-price 累计销售 
+                    span #{item.salesVolume}
+                    |  件
+            div.item-group
+                div.group-item-label 评价
+                div.group-item-price
+                    span 0
+                    |  条评价
+            div.border
+            div.item-group
+                div.group-item-label 数量
+                input#input-nubmer.input-sm(type='number',value='1')
+            div.item-group
+                div.group-item-label
+                a#btn-buy.btn.btn-success.btn-lg 立即购买
+                a#btn-addshop.btn.btn-warning.btn-lg 加入购物车
+            div.border
+            div.item-group
+                div.group-item-label 新旧
+                div.group-item-price 全新
+
+block container
+    div.item-toolbar
+        div.item-info.active 商品详情
+        div.item-comment 评价详情
+        div.item-success 成交记录
+    div#item-description #{item.description}

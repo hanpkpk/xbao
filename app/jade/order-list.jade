@@ -1,0 +1,164 @@
+extends layout-myinfo
+
+block title
+    | 已买到的商品
+
+block css
+    link(rel='stylesheet', type='text/css', href='/static/css/order-list.css')
+block js
+    script(type='text/javascript', src='/assest/js/order-list.js') 
+
+block container
+    ol.breadcrumb
+        li
+            a(href="/user/#{user.id}") 个人中心
+        if seller == 1
+            li.active 已卖出的商品
+        else if seller ==2
+            li.active 出售中的商品
+        else
+            li.active 已买到的商品
+    if seller == 2
+        if itemList
+            table.order-form-bar
+                tr
+                    td.center(colspan='3') 商品
+                    td.center 单价(元)
+                    td.center 销量
+                    td.center 操作
+            for item in itemList
+                table.order-container.col-xs-12
+                    tr.order-toolbar
+                        td(colspan='6')
+                            span 发布时间：#{item.createdTime}
+                            span 更新时间：#{item.updatedTime}
+                    tr.order-info
+                        td(colspan='3').order-border
+                            img.order-img(src='#{item.imageList[0].path}')
+                            a.order-item-name(href='/item/#{item.id}') #{item.name}
+                        td.order-border
+                            div.center #{item.price}
+                        td.order-border
+                            div.center #{item.salesVolume}
+                        td.center
+                            a(href='/item/#{item.id}/edit') 编辑
+        else
+            div 你还没有商品，赶快去<a href='/store/#{store.id}/item/release'>发布</a>吧。
+    else
+        if orderList
+            if seller
+                table.order-form-bar
+                    tr
+                        td.center(colspan='3') 商品
+                        td.center 单价(元)
+                        td.center 数量
+                        td.center 买家
+                        td.center 交易状态
+                        td.center 交易操作
+                        td.center 实付款(元)
+                        td.center 其他操作
+                for order in orderList
+                    table.order-container.col-xs-12
+                        tr.order-toolbar
+                            td(colspan='10')
+                                input.order-checkbox(type="checkbox",disabled=(order.status==1?true:false))
+                                span 订单编号：#{order.id}
+                                span 生成时间：#{order.createdTime}
+                        tr.order-info
+                            td(colspan='3')
+                                img.order-img(src='#{order.item.imageList[0].path}')
+                                a.order-item-name(href='/item/#{order.item.id}') #{order.item.name}
+                            td
+                                div.center #{order.item.price}
+                            td.order-border
+                                div.center #{order.number}
+                            td.order-border
+                                div.center #{buyer.name}
+                            td.center.order-border
+                                if order.status == -1
+                                    div 交易关闭
+                                if order.status == 0
+                                    div 待买家付款
+                                if order.status == 1
+                                    div 交易成功
+                                if order.status == 2
+                                    div 待发货
+                                if order.status == 3
+                                    div 待买家收货
+                                if order.status == 4
+                                    div 买家已收货
+                                a(href='/order/#{order.id}?q=1') 订单详情
+                            td.center.order-border
+                                if order.status == 2
+                                    a.btn.btn-primary.btn-sm.btn-normal.seller-release(href='javascript:;',data-release-id='#{order.id}',style='width:70px;') 发货
+                                else
+                                    div -
+                            td.order-border.order-real-price
+                                div.center #{order.price}
+                            td.order-delete
+                                if order.status == 1
+                                    a.btn.btn-primary.btn-sm(href='javascript:;',data-comment-id='#{order.id}') 评价
+            else
+                table.order-form-bar
+                    tr
+                        td.center(colspan='3') 商品
+                        td.center 单价(元)
+                        td.center 数量
+                        td.center 实付款(元)
+                        td.center 交易状态
+                        td.center 交易操作
+                        td.center 其他操作
+                for order in orderList
+                    table.order-container.col-xs-12
+                        tr.order-toolbar
+                            td(colspan='9')
+                                input.order-checkbox(type="checkbox",disabled=(order.status==1?true:false))
+                                span 订单编号：#{order.id}
+                                span 生成时间：#{order.createdTime}
+                        tr.order-info
+                            td(colspan='3')
+                                img.order-img(src='#{order.item.imageList[0].path}')
+                                a.order-item-name(href='/item/#{order.item.id}') #{order.item.name}
+                            td
+                                div.center #{order.item.price}
+                            td.order-border
+                                div.center #{order.number}
+                            td.order-border.order-real-price
+                                div.center #{order.price}
+                            td.center.order-border
+                                if order.status == -1
+                                    div 交易关闭
+                                if order.status == 0
+                                    div 待付款
+                                if order.status == 1
+                                    div 交易成功
+                                if order.status == 2
+                                    div 待发货
+                                if order.status == 3
+                                    div 待收货
+                                if order.status == 4
+                                    div 待评价
+                                a(href='/order/#{order.id}') 订单详情
+                            td.center.order-border
+                                if order.status == -1
+                                    div
+                                if order.status == 0
+                                    a.btn.btn-primary.btn-sm.btn-normal(href='/item/buy?n=#{order.id}') 立即付款
+                                    div.order-cancel(data-orderid='#{order.id}')
+                                        a(href='javascript:;') 取消订单
+                                if order.status == 1
+                                    a(href='javascript:;') 追加评论
+                                if order.status == 2
+                                    div
+                                        a(href='javascript:;') 提醒卖家发货
+                                if order.status == 3
+                                    a.btn.btn-primary.btn-sm.btn-normal.buyer-receipt(data-receipt-id='#{order.id}') 确认收货
+                                if order.status == 4
+                                    a.btn.btn-default.btn-sm.btn-normal.buyer-comment(data-comment-id='#{order.id}') 评价
+                            td.order-delete
+                                if order.status == 1
+                                    a.order-delete-btn(href='javascript:;',data-delete-id='#{order.id}') 删除
+                                else
+                                    a.order-delete-btn(href='javascript:;',data-delete-id='#{order.id}')
+        else
+            div 您目前还没有订单

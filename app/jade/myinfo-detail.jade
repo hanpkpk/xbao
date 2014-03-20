@@ -1,0 +1,25 @@
+extends layout-myinfo
+
+block title
+    | 个人中心
+
+block css
+    link(rel='stylesheet', type='text/css', href='/static/css/myinfo-detail.css')
+block js
+    script(type='text/javascript', src='/assest/js/myinfo-detail.js')    
+
+block container
+    div.page-header
+        h2 个人资料
+    div.col-xs-2
+        img.headImg(src='#{user.headImg}',style='height:150px;width:150px;')
+        input#file_upload(type="file",name="file_upload")
+    form.form-horizontal.col-xs-10(role="form")
+        div.form-group
+            label.col-xs-2.control-label 账户:
+            div.col-xs-4
+                input.form-control(type="text",placeholder="#{user.account}",disabled)
+        div.form-group
+            label.col-xs-2.control-label 昵称:
+            div.col-xs-4
+                input.form-control(type="text",placeholder="#{user.name}",disabled)

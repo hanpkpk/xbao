@@ -1,0 +1,59 @@
+extends layout-basic
+
+block head
+    link(rel='stylesheet', type='text/css', href='/static/css/myinfo.css')
+    block css
+
+block scripts
+    script(type='text/javascript', src='/assest/js/myinfo.js')
+    block js
+
+block main
+    input#currentUserId(value='#{credential.id}',hidden)
+    div.myinfo-page
+        div.my-title-bg
+            div.container
+                div.div-title 个人中心
+                ul.ul-title
+                    li
+                        a(href='/user/#{credential.id}') 首页
+                            i.fa.fa-caret-up.fa-lg.icon-home
+                    li#user-setting 账户设置 
+                        i.fa.fa-angle-down
+                        ul.user-setting
+                            li
+                                a(href='/user/#{credential.id}/password') 安全设置
+                            li
+                                a(href='/user/#{credential.id}/info') 个人资料
+        div.container
+            div.myinfo-container
+                div.myinfo-index
+                    if isAuthenticated
+                        img.user-headimg.headImg(src='#{credential.headImg}')
+                        div.user-name #{credential.name}
+                        span
+                            a(href='/user/#{credential.id}/info') 编辑资料
+                        span
+                            a(href='/user/#{credential.id}/password') 修改密码
+                    else
+                        img.user-headimg.headImg(src='/static/img/headImg.jpg')
+                        div.user-name 尊敬的用户
+                        span
+                            a(href='/') 登录
+                    div.myinfo-index-title 我的交易
+                    ul.myinfo-index-list
+                        li 我的购物车
+                        li.myinfo-store 我的店铺
+                        li
+                            a(href='/user/#{user.id}/orderlist') 已买到的宝贝
+                        if user.isSeller == 1
+                            li
+                                a(href='/user/#{user.id}/orderlist?q=1') 已卖出的宝贝
+                            li 
+                                a(href='/user/#{user.id}/orderlist?q=2') 出售中的宝贝
+                        li 购买过的店铺
+                        li 我的收藏
+                        li 评价管理
+                div.app-container
+                    div.col-xs-12
+                        block container

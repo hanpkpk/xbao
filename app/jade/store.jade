@@ -1,0 +1,35 @@
+extends layout-store
+
+block title
+    if store
+        | #{store.name}
+    else
+        | 错误
+
+block js
+    script(type='text/javascript', src='/assest/js/store.js')
+
+block container
+    div.adv-container
+        div.adv-title
+            i.fa.fa-fire  热销商品
+        div.adv-body
+    div#newItem.adv-container
+        div.adv-title
+            i.fa.fa-star  新品上架
+        div.adv-body
+    
+    div.adv-container
+        div.adv-title
+            i.fa.fa-tasks  全部商品
+        div.adv-body
+
+
+    div#itemTemp.item-container.col-xs-3
+        a.div-item-img
+            img.img-store-item
+        a.item-name
+        span.item-price-container
+            i.fa.fa-cny
+            span.item-price
+        span.item-sales-volume

@@ -1,0 +1,75 @@
+extends layout-myinfo
+
+block title
+    | 已买到的商品
+
+block css
+    link(rel='stylesheet', type='text/css', href='/static/css/order-info.css')
+
+block container
+    ol.breadcrumb
+        li
+            a(href="/user/#{user.id}") 个人中心
+        if seller
+            li
+                a(href='/user/#{user.id}/orderlist?q=1') 已卖出的商品
+        else
+            li
+                a(href='/user/#{user.id}/orderlist') 已买到的商品
+        li.active 订单详情
+    if order
+        div.order-info-bigtitle 订单详情
+        div.order-info-container
+            div.info-line.col-xs-12
+                span.order-info-title 收货地址：
+                span #{order.buyer.address}
+            div.info-line.col-xs-12
+                span.order-info-title 买家留言：
+                span #{order.comments}
+            div.info-line.col-xs-6
+                span.order-info-title 买家昵称：
+                span #{order.buyer.name}
+            div.info-line.col-xs-6
+                span.order-info-title 卖家昵称：
+                span #{owner.name}
+            div.info-line.col-xs-12
+                div.order-info-title.border-top 订单信息
+                div.order-info-detail.col-xs-12
+                    div.col-xs-4 订单编号：#{order.id}
+                    div.col-xs-4 成交时间：#{order.createdTime}
+                    div.col-xs-4 更新时间：#{order.updatedTime}
+            div.col-xs-12
+                table
+                    tr.table-info-bar
+                        td 商品
+                        td 状态
+                        td 单价(元)
+                        td 数量
+                        td 总价(元)
+                    tr
+                        td.order-border(style='width:300px;')
+                            img.info-img(src='#{item.imageList[0].path}')
+                            a(href='/item/#{item.id}',style='display:block;margin-right:10px;') #{item.name}
+                        td.center.order-border
+                            if order.status == -1
+                                div 交易关闭
+                            if order.status == 0
+                                div 待付款
+                            if order.status == 1
+                                div 交易成功
+                            if order.status == 2
+                                div 待发货
+                            if order.status == 3
+                                div 待收货
+                            if order.status == 4
+                                div 待评价
+                        td.center.order-border
+                            div #{item.price}
+                        td.center.order-border
+                            div #{order.number}
+                        td.center
+                            div 
+                                strong #{order.price}
+
+    else
+        div 订单不存在

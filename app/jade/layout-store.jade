@@ -1,0 +1,61 @@
+extends layout-basic
+
+block head
+    link(rel='stylesheet', type='text/css', href='/static/css/store.css')
+    block css
+
+block scripts
+    script(type="text/javascript",src="/assest/js/layout-store.js")
+    block js
+    
+block main
+    div.container
+        div.main-tab.col-xs-12
+            img.img-responsive.col-xs-3(src="/static/img/index/home.png",style="max-width:200px;padding-left:0px;")
+            div.search-form.input-group.col-xs-6.col-xs-offset-1
+                span.input-group-btn
+                    select.btn.select-search
+                        option 全部
+                        option 店内
+                input.search-input.form-control(type="text")
+                span.input-group-btn
+                    button.btn.search-button 搜索
+    if store
+        input#currentStoreId(type='hidden',value='#{store.id}')
+        div.myinfo-page
+            div.my-title-bg
+                div.container
+                    div.div-title
+                        a(href='/store/#{store.id}') #{store.name}
+                    if isAuthenticated
+                        if credential.id == store.ownerId
+                            a.a-item-release.btn.btn-default(href='/store/#{store.id}/item/release') 发布商品
+        block itempage
+        div.container(style='clear:both')
+            div.col-xs-2
+                div.book-store 收藏店铺
+                div.adv-container
+                    div.adv-title
+                        i.fa.fa-search  店内搜索
+                    div.search-container
+                        div.search-label
+                            div 关键字:
+                            input.input-search-key(type='text')
+                        div.search-label
+                            div 价格:
+                            input.input-search-price(type='text')
+                            span  ~ 
+                            input.input-search-price(type='text')
+                        div.search-label
+                            button.btn.btn-info.btn-sm 搜索
+                div.adv-container
+                    div.adv-title
+                        i.fa.fa-bars  全部类目
+                    div.navigation-container
+                        ul.navigation-label
+                            for belong in belongList
+                                li.li-belong(data-isshown='0',data-value='#{belong.belong}',class='#{belong.belong}') #{belong.belong}
+                                    i.fa.fa-chevron-circle-down.pull-right
+                                ul.navigation-son-continer(class='#{belong.belong}')
+            div.col-xs-10
+                block container

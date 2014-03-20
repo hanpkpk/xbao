@@ -1,0 +1,44 @@
+extends layout-basic
+
+block title
+    | 嗨淘网注册
+
+block head
+    link(rel='stylesheet', type='text/css', href='/static/css/register.css')
+
+block scripts
+    script(type='text/javascript', src='/assest/js/register.js')
+
+block main
+    div.container
+        div.register-contianer
+            div.page-header
+                h1 注册
+            form#form-register.form-horizontal.col-xs-10.col-xs-offset-1(role='form')
+                div.form-group
+                    label.col-xs-3.control-label(for='input-register-account') 帐号:
+                    div.col-xs-6
+                        input#input-register-account.form-control(type='text',placeholder='',name='register_account')
+                    div 帐号由5-12位数字或字母组成
+                div.form-group
+                    label.col-xs-3.control-label(for='input-register-password') 密码:
+                    div.col-xs-6
+                        input#input-register-password.form-control(type='password',placeholder='',name='register_password', autocomplete='off')
+                    div 密码长度为6-16位
+                div.form-group
+                    label.col-xs-3.control-label(for='input-register-confirm-password') 确认密码:
+                    div.col-xs-6
+                        input#input-register-confirm-password.form-control(type='password',placeholder='',name='register_confirm_password', autocomplete='off')
+                div.form-group
+                    label.col-xs-3.control-label(for='input-register-nickname') 昵称:
+                    div.col-xs-6
+                        input#input-register-nickname.form-control(type='text',placeholder='',name='register_nickname')
+                    div 昵称不超过16个字符
+                div.form-group
+                    label.col-xs-3.control-label(for='input-register-nickname') 地址:
+                    div.col-xs-6
+                        input#input-register-address.form-control(type='text',placeholder='',name='register_address')
+                div.form-group
+                    div.col-xs-offset-3.col-xs-9
+                        a#link-submit.btn.btn-success 确认
+                        a#link-cancel.btn.btn-default(href='/') 返回首页    

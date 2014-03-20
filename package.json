@@ -1,0 +1,26 @@
+{
+    "name": "haitaowang",
+    "version": "0.0.1-0001",
+    "description": "shopping",
+    "private": true,
+    "scripts": {
+        "start": "node app"
+    },
+    "dependencies": {
+        "express": "*",
+        "sequelize": "*",
+        "mysql": "*",
+        "less-middleware": "*",
+        "jade": "*",
+        "password-hash": "*",
+        "passport": "*",
+        "passport-local": "*",
+        "moment": "*",
+        "underscore": "1.5.2",
+        "underscore.string": "2.3.3",
+        "async": "0.2.9",
+        "connect-flash": "0.1.1",
+        "uuid": "1.4.1",
+        "moment":"2.4.0"
+    }
+}
