@@ -5,6 +5,8 @@ $(function() {
     var $itemTotalPrice = $('.cart-item-total');
     var $cartTotalPrice = $('.cart-total-price');
     var $cartSubmitBtn = $('.cart-submit-btn');
+    var $cartDelete = $('.cart-delete');
+    var $cartCarTotal = $('.cart-car-total');
 
     var totalPrice = 0;
     for (var i = 0; i < $itemTotalPrice.length; i++) {
@@ -68,16 +70,67 @@ $(function() {
     });
 
     $cartSubmitBtn.on('click', function() {
-        $.ajax({
-            url: '/item/buy',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                number: $inputNubmer.val(),
-                itemId: _currentItemId,
-                storeId: _currentStoreId
+        if (confirm('确认要提交订单吗？提交后将不可更改。')) {
+            var cartArr = [];
+            for (var i = 0; i < $inputNumber.length; i++) {
+                var obj = {
+                    number: $inputNumber.eq(i).val(),
+                    itemId: $inputNumber.eq(i).attr('data-item-id'),
+                    storeId: $inputNumber.eq(i).attr('data-store-id'),
+                    price: $itemTotalPrice.eq(i).text()
+                };
+                cartArr.push(obj);
             }
-        });
+            $.ajax({
+                url: '/cart/buy',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    item: cartArr
+                },
+                success: function(data) {
+                    window.location.href = '/cart/buy?n=' + data.orderIdList;
+                },
+                error: function() {
+                    alert('服务器错误');
+                }
+            });
+        }
+    });
+
+    $cartDelete.on('click', function() {
+        var _this = $(this);
+        if (confirm('确认要删除该商品吗？')) {
+            $.ajax({
+                url: '/cart/delete',
+                type: 'delete',
+                dataType: 'json',
+                data: {
+                    cartId: _this.attr('data-id')
+                },
+                success: function(data) {
+                    if (data == 200) {
+                        _this.parent().parent().remove();
+                        if ($('.cart-list-container').find('.cart-list-form').length) {
+                            totalPrice = 0;
+                            $itemTotalPrice = $('.cart-item-total');
+                            for (var i = 0; i < $itemTotalPrice.length; i++) {
+                                totalPrice += parseFloat($itemTotalPrice.eq(i).text());
+                            }
+                            $cartTotalPrice.text(modifyPrice(totalPrice));
+                            $cartCarTotal.text(parseInt($cartCarTotal.text()) - 1);
+                        } else {
+                            $cartCarTotal.parent().empty().append('<div>购物车中没有商品，赶快去<a href="/">添加</a>吧</div>');
+                        }
+                    } else {
+                        alert('服务器出错');
+                    }
+                },
+                error: function() {
+                    alert('服务器出错');
+                }
+            });
+        }
     });
 });
 

@@ -89,6 +89,9 @@ module.exports = {
         if (cartEntity.item) {
             cartObject.item = cartEntity.item;
         }
+        if (cartEntity.store) {
+            cartObject.store = cartEntity.store;
+        }
         return cartObject;
     }
 };

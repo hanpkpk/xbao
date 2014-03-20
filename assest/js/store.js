@@ -28,7 +28,7 @@ $(function() {
                         $newItem.after(itemTemp);
                     }
                 } else {
-                    alert('error');
+                    $newItem.after('店铺目前还没有商品！');
                 }
             },
             error: function(err) {
@@ -58,7 +58,7 @@ $(function() {
                         $hotItem.after(itemTemp);
                     }
                 } else {
-                    alert('error');
+                    $hotItem.after('店铺目前还没有商品！');
                 }
             },
             error: function(err) {
@@ -88,7 +88,7 @@ $(function() {
                         $someItem.after(itemTemp);
                     }
                 } else {
-                    alert('error');
+                    $someItem.after('店铺目前还没有商品！');
                 }
             },
             error: function(err) {

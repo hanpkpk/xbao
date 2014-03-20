@@ -8,6 +8,15 @@ $(function() {
     var $itemPrice = $('#item-price');
     var $buyBtn = $('#buyBtn');
 
+    var $totalPrice = $('.price');
+    var $itemTotalPrice = $('.buy-item-total');
+
+    var total = 0;
+    for (var i = 0; i < $itemTotalPrice.length; i++) {
+        total += parseFloat($itemTotalPrice.eq(i).text());
+    }
+    $totalPrice.text(total);
+
     $subBtn.on('click', function() {
         if ($inputNumber.val() <= 1) {
             $inputNumber.val(1);
@@ -46,27 +55,29 @@ $(function() {
     });
 
     $buyBtn.on('click', function() {
-        $.ajax({
-            url: '/order/create',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                orderId: $('#order-id').val(),
-                price: $price.text(),
-                number: $inputNumber.val()
-            },
-            success: function(data) {
-                if (data == 200) {
-                    alert('购买成功');
-                    window.location.href = '/user/' + $buyerId.val() + '/orderlist';
-                } else {
-                    alert('购买失败');
+        if (confirm('确认要购买吗？')) {
+            $.ajax({
+                url: '/order/create',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    orderId: $('#order-id').val(),
+                    price: $price.text(),
+                    number: $inputNumber.val()
+                },
+                success: function(data) {
+                    if (data == 200) {
+                        alert('购买成功');
+                        window.location.href = '/user/' + $buyerId.val() + '/orderlist';
+                    } else {
+                        alert('购买失败');
+                    }
+                },
+                error: function(err) {
+                    alert('服务器出错');
                 }
-            },
-            error: function(err) {
-                alert('服务器出错');
-            }
-        });
+            });
+        }
     });
 });
 

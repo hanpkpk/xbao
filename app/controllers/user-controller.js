@@ -189,22 +189,38 @@ module.exports = {
     },
 
     createOrder: function(req, res, next) {
-        var orderId = _str.trim(req.body.orderId);
-        var price = _str.trim(req.body.price);
-        var number = _str.trim(req.body.number);
+        var orderIdArr = req.body.orderId;
+        var many = req.query.many || false;
 
-        var newObj = {
-            price: price,
-            status: 2,
-            number: number
-        };
-        OrderModel.updateOrder(newObj, orderId, function(err) {
-            if (!err) {
-                res.json(200);
-            } else {
-                res.json(500);
+        if (many) {
+            for (var i = 0; i < orderIdArr.length; i++) {
+                var newObj = {
+                    status: 2,
+                }
+                OrderModel.updateOrder(newObj, orderIdArr[i], function(err) {
+                    if (err) {
+                        console.log(err);
+                        res.json(500);
+                    }
+                });
             }
-        });
+            res.json(200);
+        } else {
+            var price = _str.trim(req.body.price);
+            var number = _str.trim(req.body.number);
+            var newObj = {
+                price: price,
+                status: 2,
+                number: number
+            };
+            OrderModel.updateOrder(newObj, orderIdArr, function(err) {
+                if (!err) {
+                    res.json(200);
+                } else {
+                    res.json(500);
+                }
+            });
+        }
     },
 
     orderListPage: function(req, res, next) {
@@ -265,7 +281,8 @@ module.exports = {
                         model: Item,
                         as: 'item'
                     }];
-                    OrderModel.findOrders(option, include, null, function(err, orders) {
+                    var orderBy = 'created_at DESC';
+                    OrderModel.findOrders(option, include, orderBy, function(err, orders) {
                         UserModel.findUserById(userId, function(err, user) {
                             if (orders) {
                                 var orderList = [];
@@ -303,7 +320,8 @@ module.exports = {
             }];
             UserModel.findUserById(userId, function(err, user) {
                 if (user) {
-                    OrderModel.findOrders(option, include, null, function(err, orders) {
+                    var orderBy = 'created_at DESC';
+                    OrderModel.findOrders(option, include, orderBy, function(err, orders) {
                         if (orders) {
                             var orderList = [];
                             for (var i = 0; i < orders.length; i++) {

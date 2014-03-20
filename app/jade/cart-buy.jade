@@ -1,0 +1,60 @@
+extends layout-basic
+
+block title
+    | 确认购买
+
+block head
+    link(rel='stylesheet', type='text/css', href='/static/css/buy.css')
+
+block scripts
+    script(type='text/javascript', src='/assest/js/cart-buy.js')
+
+block main
+    include searchbar-partial
+    div.buy-title-bg
+        div.container
+            div.div-title 确认订单
+    div.container
+        input#buyer-id(type='hidden',value='#{user.id}')
+        div.order-title.col-xs-12
+            div.col-xs-4
+                div.buy-info-title 商品信息
+            div.col-xs-2
+                div.buy-info-title 订单编号
+            div.col-xs-2
+                div.buy-info-title 所属店铺
+            div.col-xs-1
+                div.buy-info-title 单价(元)
+            div.col-xs-1
+                div.buy-info-title 数量
+            div.col-xs-2
+                div.buy-info-title 小计(元)
+        for cart in itemList
+            input.cart-order-id(type='hidden',value='#{cart.order.id}')
+            div.order-info.col-xs-12
+                div.col-xs-4
+                    img.buy-item-img(src='#{cart.item.imageList[0].path}')
+                    a(href='/item/#{cart.item.id}') #{cart.item.name}
+                div.col-xs-2
+                    div.buy-item-price #{cart.order.id}
+                div.col-xs-2.buy-item-price
+                    a(href='/store/#{cart.order.store.id}') #{cart.order.store.name}
+                div.col-xs-1
+                    div.buy-item-price #{cart.item.price}
+                div.col-xs-1
+                    div.buy-input #{cart.order.number}
+                div.col-xs-2
+                    div.buy-item-total #{cart.order.price}
+        div.order-buy.col-xs-12
+            div.buy-comment.col-xs-7
+            div.buy-price.col-xs-5
+                span 实付款：
+                i.fa.fa-cny
+                span.price
+            div.buy-address.col-xs-12
+                strong 收货地址
+                |：#{user.address}
+            div.buy-name.col-xs-12
+                strong 收货人
+                |：#{user.name}
+        a#buyBtn.btn.btn-primary 确认购买

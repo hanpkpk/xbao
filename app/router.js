@@ -137,5 +137,8 @@ module.exports = function(app) {
     app.get('/item/:id/edit', autoLogin, controller.ensureAuthenticated, itemController.itemEditPage);
 
     app.post('/cart/get', autoLogin, itemController.getCart);
+    app.get('/cart/buy', autoLogin, controller.ensureAuthenticated, itemController.cartBuyPage);
     app.get('/cart/:userId', autoLogin, controller.ensureAuthenticated, itemController.cartPage);
+    app.post('/cart/buy', autoLogin, itemController.cartBuy);
+    app.delete('/cart/delete', autoLogin, itemController.deleteCart);
 };

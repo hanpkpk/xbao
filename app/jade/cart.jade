@@ -12,36 +12,40 @@ block scripts
 block main
     include searchbar-partial
     div.container
-        div 购物车商品总数：#{total}
-        table.cart-title-bar
-            tr
-                td.cart-bord(colspan='3') 商品
-                td.cart-bord 所属店铺
-                td.cart-bord 单价
-                td.cart-bord 数量
-                td.cart-bord 小计
-                td 操作
-        table.cart-list-container
-            for cart in cartList
-                tr.cart-list-form
-                    td(colspan='3')
-                        img.cart-list-img(src='#{cart.item.imageList[0].path}')
-                        a(href='/item/#{cart.item.id}',style='font-size:14px;color:#444') #{cart.item.name}
-                    td.cart-list-center #{cart.item.store.name}
-                    td.cart-list-center.cart-item-price #{cart.item.price}
-                    td.cart-list-center
-                        div.cart-input
-                            i.fa.fa-minus-square-o.fa-lg.btn
-                            input.cart-item-number(type='text',value='1')
-                            i.fa.fa-plus-square-o.fa-lg.btn
-                    td.cart-list-center.cart-item-total #{cart.item.price}
-                    td.cart-list-center
-                        a.cart-delete(href='javascript:;',data-id='#{cart.item.id}') 删除
-        div.cart-submit
-            a.cart-delete-all(href='/cart/delete') 删除全部
-            div.cart-submit-btn
-                a(href='javascript:;') 提交订单
-            div.cart-total-price-container
-                div.cart-total-price
-                div.cart-price-icon ￥
-                div.cart-total-price-title 合计：
+        if cartList
+            span 购物车商品总数：
+            span.cart-car-total #{total}
+            table.cart-title-bar
+                tr
+                    td.cart-bord(colspan='3') 商品
+                    td.cart-bord 所属店铺
+                    td.cart-bord 单价
+                    td.cart-bord 数量
+                    td.cart-bord 小计
+                    td 操作
+            table.cart-list-container
+                for cart in cartList
+                    tr.cart-list-form
+                        td(colspan='3')
+                            img.cart-list-img(src='#{cart.item.imageList[0].path}')
+                            a(href='/item/#{cart.item.id}',style='font-size:14px;color:#444') #{cart.item.name}
+                        td.cart-list-center #{cart.store.name}
+                        td.cart-list-center.cart-item-price #{cart.item.price}
+                        td.cart-list-center
+                            div.cart-input
+                                i.fa.fa-minus-square-o.fa-lg.btn
+                                input.cart-item-number(type='text',value='1',data-item-id='#{cart.item.id}',data-store-id='#{cart.store.id}')
+                                i.fa.fa-plus-square-o.fa-lg.btn
+                        td.cart-list-center.cart-item-total #{cart.item.price}
+                        td.cart-list-center
+                            a.cart-delete(href='javascript:;',data-id='#{cart.id}') 删除
+            div.cart-submit
+                a.cart-delete-all(href='/cart/delete') 删除全部
+                div.cart-submit-btn
+                    a(href='javascript:;') 提交订单
+                div.cart-total-price-container
+                    div.cart-total-price
+                    div.cart-price-icon ￥
+                    div.cart-total-price-title 合计：
+        else
+            div 购物车中没有商品，赶快去<a href='/'>添加</a>吧

@@ -4,6 +4,7 @@ var Sequelize = require('sequelize');
 var fs = require('fs');
 var path = require('path');
 var moment = require('moment');
+var async = require('async');
 
 var xbao = require('../models/entity-manager');
 var mapper = require('../mapper/mapper-object');
@@ -298,6 +299,7 @@ module.exports = {
     },
     addItemToCart: function(req, res, next) {
         var itemId = req.body.itemId;
+        var storeId = req.body.storeId;
         var user = req.user || '';
 
         if (!user) {
@@ -321,7 +323,8 @@ module.exports = {
                             } else {
                                 var obj = {
                                     item_id: itemId,
-                                    buyer_id: user.id
+                                    buyer_id: user.id,
+                                    store_id: storeId
                                 };
                                 CartModel.createCart(obj, function(err) {
                                     if (!err) {
@@ -364,7 +367,7 @@ module.exports = {
                 } else {
                     res.json({
                         code: 200,
-                        cartList: null
+                        cartList: []
                     });
                 }
             });
@@ -380,10 +383,13 @@ module.exports = {
         var include = [{
             model: User,
             as: 'buyer'
-            }, {
+        }, {
             model: Item,
             as: 'item'
-            }];
+        }, {
+            model: Store,
+            as: 'store'
+        }];
         CartModel.findCarts(where, include, function(err, carts) {
             if (carts) {
                 var cartArr = [];
@@ -401,6 +407,110 @@ module.exports = {
                     cartList: null,
                     total: 0
                 });
+            }
+        });
+    },
+    cartBuy: function(req, res, next) {
+        var itemArr = req.body.item;
+        var user = req.user;
+        var orderIdArr = '';
+        for (var i = 0; i < itemArr.length; i++) {
+            var date = new Date();
+            var orderId = moment(date).format("YYYYMMDDHHmmss") + itemArr[i].itemId + user.id;
+            var option = {
+                id: orderId,
+                number: itemArr[i].number,
+                item_id: itemArr[i].itemId,
+                buyer_id: user.id,
+                price: itemArr[i].price,
+                store_id: itemArr[i].storeId
+            };
+            if (i === itemArr.length - 1) {
+                orderIdArr += orderId;
+            } else {
+                orderIdArr += orderId + ',';
+            }
+            OrderModel.createOrder(option, function(err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+            var where = {
+                item_id: itemArr[i].itemId,
+                buyer_id: user.id
+            };
+            CartModel.deleteCarts(where, function(err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+        res.json({
+            code: 200,
+            orderIdList: orderIdArr
+        });
+    },
+    cartBuyPage: function(req, res, next) {
+        var orderId = req.query.n;
+        var orderIdArr = orderId.split(',');
+
+        var itemArr = [];
+
+        async.series([
+
+            function(cb) {
+                async.eachSeries(orderIdArr, function(orderId, callback) {
+                    var option = {
+                        id: orderId
+                    };
+                    var include = [{
+                        model: Item,
+                        as: 'item'
+                    }, {
+                        model: User,
+                        as: 'buyer'
+                    }, {
+                        model: Store,
+                        as: 'store'
+                    }];
+                    OrderModel.findOrder(option, include, function(err, order) {
+                        if (order) {
+                            var obj = {
+                                order: mapper.orderObjectMapper(order),
+                                item: mapper.itemObjectMapper(order.item),
+                            };
+                            itemArr.push(obj);
+                            callback();
+                        } else {
+                            res.send(err);
+                            callback();
+                        }
+                    });
+                }, function(err) {
+                    cb(err);
+                });
+            },
+            function(cb) {
+                res.render('cart-buy', {
+                    itemList: itemArr,
+                    user: itemArr[0].order.buyer
+                });
+                cb();
+            }
+        ]);
+    },
+    deleteCart: function(req, res, next) {
+        var cartId = req.body.cartId || null;
+
+        var where = {
+            id: cartId
+        };
+        CartModel.deleteCarts(where, function(err) {
+            if (err) {
+                console.log(err);
+                res.json(500);
+            } else {
+                res.json(200);
             }
         });
     }

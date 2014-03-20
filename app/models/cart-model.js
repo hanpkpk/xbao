@@ -38,5 +38,12 @@ module.exports = {
         }).error(function(err) {
             callback(err);
         });
+    },
+    deleteCarts:function(where,callback) {
+        Cart.destroy(where).success(function() {
+            callback(null);
+        }).error(function(err) {
+            callback(err);
+        });
     }
 };

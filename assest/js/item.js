@@ -63,6 +63,7 @@ $(function() {
             dataType: 'json',
             data: {
                 itemId: _currentItemId,
+                storeId: _currentStoreId
             },
             success: function(data) {
                 if (data == 200) {

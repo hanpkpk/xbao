@@ -233,6 +233,9 @@ cart.belongsTo(user, {
 }).belongsTo(user, {
     as: 'item',
     foreignKey: 'item_id'
+}).belongsTo(store,{
+    as:'store',
+    foreignKey:'store_id'
 });
 
 sequelize.sync({

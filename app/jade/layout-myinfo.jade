@@ -43,7 +43,8 @@ block main
                             a(href='/') 登录
                     div.myinfo-index-title 我的交易
                     ul.myinfo-index-list
-                        li 我的购物车
+                        li 
+                            a(href='/cart/#{user.id}') 我的购物车
                         li.myinfo-store 我的店铺
                         li
                             a(href='/user/#{user.id}/orderlist') 已买到的宝贝
