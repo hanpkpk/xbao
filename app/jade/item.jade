@@ -16,7 +16,7 @@ block itempage
     input#currentItemId(value='#{item.id}',hidden)
     div.container
         div.div-item-name #{item.name}
-        div.col-xs-6.nopadding
+        div.col-xs-5.nopadding
             ul.bxslider
                 for imagePath in item.imageList
                     li
@@ -25,7 +25,7 @@ block itempage
                 - for (var i = 0;i<item.imageList.length;i++)
                     a(data-slide-index="#{i}",href="")
                         img.a-img-thumbnail(src="#{item.imageList[i].path}")
-        div.col-xs-6
+        div.col-xs-7
             div.item-group
                 div.group-item-label 价格
                 div.group-item-price 

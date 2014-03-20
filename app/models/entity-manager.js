@@ -164,6 +164,26 @@ var orders = sequelize.define('orders', {
         allowNull: false
     }
 });
+var comments = sequelize.define('comments', {
+    id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    text: {
+        type: Sequelize.TEXT,
+        allowNull: false
+    }
+});
+var cart = sequelize.define('cart', {
+    id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    }
+});
 
 product.belongsTo(category, {
     as: 'category',
@@ -183,7 +203,7 @@ store.belongsTo(category, {
 goods.belongsTo(store, {
     as: 'store',
     foreignKey: 'storeId'
-}).belongsTo(product,{
+}).belongsTo(product, {
     as: 'product',
     foreignKey: 'product_id'
 });
@@ -197,6 +217,22 @@ orders.belongsTo(user, {
 }).belongsTo(store, {
     as: 'store',
     foreignKey: 'store_id'
+});
+
+comments.belongsTo(user, {
+    as: 'buyer',
+    foreignKey: 'buyer_id'
+}).belongsTo(goods, {
+    as: 'item',
+    foreignKey: 'item_id'
+});
+
+cart.belongsTo(user, {
+    as: 'buyer',
+    foreignKey: 'buyer_id'
+}).belongsTo(user, {
+    as: 'item',
+    foreignKey: 'item_id'
 });
 
 sequelize.sync({
@@ -213,5 +249,7 @@ module.exports = {
     user: user,
     store: store,
     goods: goods,
-    orders: orders
+    orders: orders,
+    cart: cart,
+    comments: comments
 };

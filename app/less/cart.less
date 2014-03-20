@@ -1,0 +1,106 @@
+td{
+    word-break: break-all; 
+    word-wrap:break-word;
+}
+
+.cart-title-bar {
+    table-layout: fixed;
+    width: 100%;
+    text-align: center;
+    border-top: 4px solid #a7cbff;
+    margin-top: 20px;
+    background-color: #e2f2ff;
+    line-height: 30px;
+    border-radius: 3px;
+    .cart-bord {
+        border-right: 1px solid white;
+    }
+}
+
+.cart-list-container {
+    table-layout: fixed;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .cart-list-form{
+        height: 100px;
+        background-color: #EEF6FF;
+        border: 1px solid #CADEFF;
+        .cart-list-img {
+            float: left;
+            width: 80px;
+            height: 80px;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+        .cart-list-center {
+            text-align: center;
+            .cart-input {
+                text-align: center;
+                line-height: 55px;
+                .cart-item-number {
+                    width: 50px;
+                    text-align: center;
+                    margin-right: 5px;
+                    line-height: 0px;
+                }
+                i.btn {
+                    padding: 0;
+                }
+            }
+        }
+        .cart-item-price {
+            font-weight: bold;
+        }
+        .cart-item-total {
+            font-weight: bold;
+            color: #f40;
+        }
+    }
+}
+
+.cart-submit {
+    height: 45px;
+    background-color: #eaeaea;
+    border: 1px solid #c8c8c8;
+    line-height: 43px;
+    width: 100%;
+    .cart-delete-all {
+        display: block;
+        float: left;
+        margin-left: 15px;
+        color: #444;
+        text-decoration: none;
+    }
+    .cart-submit-btn {
+        float: right;
+        font-size: 18px;
+        padding: 0px 20px;
+        font-weight: bold;
+        border-left: 1px solid #c8c8c8;
+        a {
+            color: #f40;
+            text-decoration: none;
+        }
+    }
+    .cart-total-price-container {
+        float: right;
+        border-left: 1px solid #c8c8c8;
+        padding: 0px 20px;
+        .cart-total-price-title {
+            float: right;
+        }
+        .cart-price-icon {
+            float: right;
+            font-size: 22px;
+            color: #999;
+            font-weight: bold;
+        }
+        .cart-total-price {
+            float: right;
+            font-size: 22px;
+            color: #f40;
+            font-weight: bold;
+        }
+    }
+}

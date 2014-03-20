@@ -78,5 +78,17 @@ module.exports = {
         }
         return storeObject;
     },
-
+    cartObjectMapper: function(cartEntity) {
+        var cartObject = {};
+        cartObject.id = cartEntity.id;
+        cartObject.createdTime = moment(cartEntity.created_at).format('YYYY-MM-DD HH:mm');
+        cartObject.updatedTime = moment(cartEntity.updated_at).format('YYYY-MM-DD HH:mm');
+        if (cartEntity.buyer) {
+            cartObject.buyer = cartEntity.buyer;
+        }
+        if (cartEntity.item) {
+            cartObject.item = cartEntity.item;
+        }
+        return cartObject;
+    }
 };

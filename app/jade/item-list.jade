@@ -1,0 +1,36 @@
+extends layout-basic
+
+block title
+    | 搜索结果
+
+block head
+    link(rel='stylesheet', type='text/css', href='/static/css/item-list.css')
+
+block scripts
+    script(type='text/javascript', src='/assest/js/item-list.js')
+
+block main
+    include searchbar-partial
+    div.container
+        div.item-list-total-bar
+            a.item-list-total-title(href='#{url}',class=(sort?'':'active')) 默认
+            a.item-list-total-title(class=(sort==0||sort==1?'active':''),data-sort='0') 销量 
+                i.fa(class=(sort==1?'fa-arrow-up':'fa-arrow-down'))
+            a.item-list-total-title(class=(sort==2||sort==3?'active':''),data-sort='2') 价格 
+                i.fa(class=(sort==3?'fa-arrow-up':'fa-arrow-down'))
+            a.item-list-total-title(class=(sort==4||sort==5?'active':''),data-sort='4') 最新 
+                i.fa(class=(sort==5?'fa-arrow-up':'fa-arrow-down'))
+        div.item-list-container
+            if itemList
+                for item in itemList
+                    div.item-list-form.col-xs-12
+                        div.item-form-title.col-xs-5
+                            a.a-item-form-img(href='/item/#{item.id}')
+                                img.item-form-img(src='#{item.imageList[0].path}')
+                            a.item-form-name(href='/item/#{item.id}') #{item.name}
+                            a.item-form-store-name(href='/store/#{item.store.id}') #{item.store.name}
+                        div.item-form-price.col-xs-3 ￥#{item.price}
+                        div.item-form-text.col-xs-2 已成交#{item.salesVolume}笔
+                        div.item-form-text.col-xs-2 0条评论
+            else
+                div 没有符合的商品

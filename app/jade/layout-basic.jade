@@ -19,9 +19,15 @@ block body
                         li
                             a(href='/register') 免费注册
                     li
-                        a(href='#')
-                            i.fa.fa-shopping-cart
-                            |  购物车
+                        if isAuthenticated
+                            a(href='/cart/#{credential.id}')
+                                i.fa.fa-shopping-cart
+                                |  购物车 
+                                span.cart-number 0
+                        else
+                            a(href='javascript:;')
+                                i.fa.fa-shopping-cart
+                                |  购物车
                     li
                         a(href='#')
                             i.fa.fa-star  收藏夹

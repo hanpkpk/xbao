@@ -17,6 +17,7 @@ var StoreModel = require('../models/store-model');
 var ProductModel = require('../models/product-model');
 var ItemModel = require('../models/item-model');
 var OrderModel = require('../models/order-model');
+var CartModel = require('../models/cart-model');
 
 module.exports = {
     releasePage: function(req, res, next) {
@@ -233,9 +234,9 @@ module.exports = {
         var include = [{
             model: Store,
             as: 'store'
-        },{
-            model:Product,
-            as:'product'
+        }, {
+            model: Product,
+            as: 'product'
         }];
         ItemModel.findItemById(itemId, include, function(err, item) {
             if (item) {
@@ -252,6 +253,154 @@ module.exports = {
                 });
             } else {
                 res.send('error');
+            }
+        });
+    },
+    itemListPage: function(req, res, next) {
+        var searchVal = req.query.key;
+        var url = req.path + '?key=' + searchVal;
+        var sort = req.query.sort || null;
+        var sortBy = ['salesVolume desc', 'salesVolume asc', 'price desc', 'price asc', 'created_at desc', 'created_at asc'];
+
+        var where = ["goods.name LIKE '%" + searchVal + "%'"];
+        var orderBy = null;
+        var include = [{
+            model: Store,
+            as: 'store'
+        }];
+
+        if (sort !== null) {
+            orderBy = sortBy[sort];
+        }
+
+        ItemModel.findItems(where, orderBy, 40, include, function(err, items) {
+            if (items) {
+                var itemArr = [];
+                for (var i = 0; i < items.length; i++) {
+                    itemArr.push(mapper.itemObjectMapper(items[i]));
+                }
+                res.render('item-list', {
+                    itemList: itemArr,
+                    keyWord: searchVal,
+                    url: url,
+                    sort: sort
+                });
+            } else {
+                console.log(err);
+                res.render('item-list', {
+                    itemList: null,
+                    keyWord: searchVal,
+                    url: url,
+                    sort: sort
+                });
+            }
+        });
+    },
+    addItemToCart: function(req, res, next) {
+        var itemId = req.body.itemId;
+        var user = req.user || '';
+
+        if (!user) {
+            res.json(407);
+        } else {
+            var include = [{
+                model: Store,
+                as: 'store'
+            }];
+            ItemModel.findItemById(itemId, include, function(err, item) {
+                if (item) {
+                    if (user.id != item.store.ownerId) {
+                        var where = {
+                            buyer_id: user.id,
+                            item_id: itemId
+                        };
+                        CartModel.findCart(where, function(err, cart) {
+                            console.log(cart);
+                            if (cart) {
+                                res.json(406);
+                            } else {
+                                var obj = {
+                                    item_id: itemId,
+                                    buyer_id: user.id
+                                };
+                                CartModel.createCart(obj, function(err) {
+                                    if (!err) {
+                                        res.json(200);
+                                    } else {
+                                        res.json(500);
+                                    }
+                                });
+                            }
+                        });
+
+                    } else {
+                        res.json(403);
+                    }
+                } else {
+                    res.json(500);
+                }
+            });
+        }
+    },
+    getCart: function(req, res, next) {
+        var user = req.user || null;
+        if (user) {
+            var where = {
+                buyer_id: user.id
+            };
+            var include = [{
+                model: User,
+                as: 'buyer'
+            }, {
+                model: Item,
+                as: 'item'
+            }];
+            CartModel.findCarts(where, include, function(err, carts) {
+                if (carts) {
+                    res.json({
+                        code: 200,
+                        cartList: carts
+                    });
+                } else {
+                    res.json({
+                        code: 200,
+                        cartList: null
+                    });
+                }
+            });
+        } else {
+            res.json(407);
+        }
+    },
+    cartPage: function(req, res, next) {
+        var userId = req.params.userId;
+        var where = {
+            buyer_id: userId
+        };
+        var include = [{
+            model: User,
+            as: 'buyer'
+            }, {
+            model: Item,
+            as: 'item'
+            }];
+        CartModel.findCarts(where, include, function(err, carts) {
+            if (carts) {
+                var cartArr = [];
+                for (var i = 0; i < carts.length; i++) {
+                    cartArr.push(mapper.cartObjectMapper(carts[i]));
+                    cartArr[i].item = mapper.itemObjectMapper(carts[i].item);
+                    cartArr[i].item.store = carts[i].item.getStore();
+                }
+                res.render('cart', {
+                    cartList: cartArr,
+                    total: carts.length
+                });
+            } else {
+                res.render('cart', {
+                    cartList: null,
+                    total: 0
+                });
             }
         });
     }

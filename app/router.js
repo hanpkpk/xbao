@@ -74,9 +74,8 @@ module.exports = function(app) {
                 res.cookie('xbao-user', {
                     account: user.account
                 }, {
-                    path: '/',
                     httpOnly: false,
-                    maxAge: 604800000
+                    maxAge: 9000000
                 });
             }
             if (!info.message) {
@@ -132,6 +131,11 @@ module.exports = function(app) {
     app.post('/item/release', itemController.releaseItem);
     app.get('/item/buy', autoLogin, controller.ensureAuthenticated, itemController.buyPage);
     app.post('/item/buy', itemController.buyItem);
+    app.post('/item/add', itemController.addItemToCart);
+    app.get('/items', autoLogin, itemController.itemListPage);
     app.get('/item/:id', autoLogin, itemController.itemPage);
     app.get('/item/:id/edit', autoLogin, controller.ensureAuthenticated, itemController.itemEditPage);
+
+    app.post('/cart/get', autoLogin, itemController.getCart);
+    app.get('/cart/:userId', autoLogin, controller.ensureAuthenticated, itemController.cartPage);
 };

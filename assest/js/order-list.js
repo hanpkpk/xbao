@@ -1,9 +1,9 @@
 $(function() {
-    $orderCancel = $('.order-cancel');
-    $orderDelete = $('.order-delete-btn');
-    $sellRelease = $('.seller-release');
-    $buyerReceipt = $('.buyer-receipt');
-    $buyerComment = $('.buyer-comment');
+    var $orderCancel = $('.order-cancel');
+    var $orderDelete = $('.order-delete-btn');
+    var $sellRelease = $('.seller-release');
+    var $buyerReceipt = $('.buyer-receipt');
+    var $buyerComment = $('.buyer-comment');
 
     $orderCancel.on('click', function() {
         if (confirm('是否要取消订单？')) {

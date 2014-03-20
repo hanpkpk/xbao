@@ -2,7 +2,9 @@ div.container
     div.main-tab.col-xs-12
         img.img-responsive.col-xs-3(src="/static/img/index/home.png",style="max-width:200px;padding-left:0px;")
         div.search-form.input-group.col-xs-6.col-xs-offset-1
-            input.search-input.form-control(type="text")
+            if keyWord
+                input.search-input.form-control(type="text",value="#{keyWord}")
+            else
+                input.search-input.form-control(type="text")
             span.input-group-btn
                 button.btn.search-button(type="submit") 搜索
-        div.col-xs-1 高级搜索

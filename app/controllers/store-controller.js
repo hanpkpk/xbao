@@ -114,12 +114,22 @@ module.exports = {
     },
     getNewItem: function(req, res, next) {
         var storeId = req.body.storeId;
+        var ord = req.query.orderby || null;
         var option = {
             storeId: storeId
         };
-        var orderBy = 'updated_at desc';
+        var order = ['created_at desc', 'salesVolume desc'];
 
-        ItemModel.findItems(option, orderBy, 4, null, function(err, items) {
+        var orderBy;
+        var limit;
+        if (ord) {
+            orderBy = order[ord];
+            limit = 4;
+        } else {
+            orderBy = null;
+            limit = 16;
+        }
+        ItemModel.findItems(option, orderBy, limit, null, function(err, items) {
             if (items) {
                 var itemArr = [];
                 for (var i = 0; i < items.length; i++) {
