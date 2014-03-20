@@ -501,16 +501,23 @@ module.exports = {
     },
     deleteCart: function(req, res, next) {
         var cartId = req.body.cartId || null;
-
-        var where = {
-            id: cartId
-        };
+        var userId = req.body.userId || null;
+        var where = {};
+        if (userId) {
+            where = {
+                buyer_id: userId
+            };
+        } else {
+            where = {
+                id: cartId
+            };
+        }
         CartModel.deleteCarts(where, function(err) {
-            if (err) {
+            if (!err) {
+                res.json(200);
+            } else {
                 console.log(err);
                 res.json(500);
-            } else {
-                res.json(200);
             }
         });
     }

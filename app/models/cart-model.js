@@ -41,8 +41,10 @@ module.exports = {
     },
     deleteCarts:function(where,callback) {
         Cart.destroy(where).success(function() {
-            callback(null);
+            console.log('OK');
+            callback();
         }).error(function(err) {
+            console.log('error');
             callback(err);
         });
     }

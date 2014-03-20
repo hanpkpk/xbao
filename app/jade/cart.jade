@@ -40,7 +40,7 @@ block main
                         td.cart-list-center
                             a.cart-delete(href='javascript:;',data-id='#{cart.id}') 删除
             div.cart-submit
-                a.cart-delete-all(href='/cart/delete') 删除全部
+                a.cart-delete-all(href='javascript:;',data-user-id='#{cartList[0].buyer.id}') 删除全部
                 div.cart-submit-btn
                     a(href='javascript:;') 提交订单
                 div.cart-total-price-container

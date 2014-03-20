@@ -7,6 +7,7 @@ $(function() {
     var $cartSubmitBtn = $('.cart-submit-btn');
     var $cartDelete = $('.cart-delete');
     var $cartCarTotal = $('.cart-car-total');
+    var $cartDeleteAll = $('.cart-delete-all');
 
     var totalPrice = 0;
     for (var i = 0; i < $itemTotalPrice.length; i++) {
@@ -122,6 +123,28 @@ $(function() {
                         } else {
                             $cartCarTotal.parent().empty().append('<div>购物车中没有商品，赶快去<a href="/">添加</a>吧</div>');
                         }
+                    } else {
+                        alert('服务器出错');
+                    }
+                },
+                error: function() {
+                    alert('服务器出错');
+                }
+            });
+        }
+    });
+    $cartDeleteAll.on('click', function() {
+        if (confirm('确认要删除全部商品吗？')) {
+            $.ajax({
+                url: '/cart/delete',
+                type: 'delete',
+                dataType: 'json',
+                data: {
+                    userId: $cartDeleteAll.attr('data-user-id')
+                },
+                success: function(data) {
+                    if (data == 200) {
+                        $cartCarTotal.parent().empty().append('<div>购物车中没有商品，赶快去<a href="/">添加</a>吧</div>');
                     } else {
                         alert('服务器出错');
                     }
