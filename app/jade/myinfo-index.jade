@@ -3,7 +3,12 @@ extends layout-myinfo
 block title
     | 个人中心
 
+block js
+    script(type='text/javascript', src='/assest/js/myinfo-index.js')  
+
 block container
+    if store
+        input.user-info-store-id(type='hidden',value='#{store.id}')
     div.userinfo.col-xs-8
         div.samll-container
             div.samll-container-title

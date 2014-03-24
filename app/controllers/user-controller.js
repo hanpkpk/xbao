@@ -62,17 +62,28 @@ module.exports = {
         var userId = req.params.id;
         if (userId != req.user.id) {
             res.redirect('/');
+        } else {
+            UserModel.findUserById(userId, function(err, user) {
+                if (user) {
+                    StoreModel.findStoreByOwnerId(user.id, function(err, store) {
+                        if (store) {
+                            res.render('myinfo-index', {
+                                user: user,
+                                store: store
+                            });
+                        } else {
+                            res.render('myinfo-index', {
+                                user: user,
+                                store: null
+                            });
+                        }
+                    });
+                } else {
+                    console.log(err);
+                    res.send(err);
+                }
+            });
         }
-        UserModel.findUserById(userId, function(err, user) {
-            if (err) {
-                console.log(err);
-            }
-            if (user) {
-                res.render('myinfo-index', {
-                    user: user
-                });
-            }
-        });
     },
 
     userInfo: function(req, res, next) {
