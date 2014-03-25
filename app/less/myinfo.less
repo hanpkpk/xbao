@@ -159,6 +159,9 @@
 
 .samll-container {
     padding: 10px 0px;
+    width: 100%;
+    position: relative;
+    display: inline-block;
     .samll-container-title {
         width: 100%;
         font-weight: bold;
@@ -174,6 +177,26 @@
             }
         }
     }
+    .small-container-body {
+        margin-top: 10px;
+        display: inline-block;
+        width: 100%;
+        .small-container-image {
+            width: 80px;
+            height: 80px;
+            float: left;
+            margin-right: 10px;
+        }
+    }
+}
+.loading-img {
+    position: absolute;
+    left: 45%;
+    top: 45%;
+}
+
+#item-sell-template {
+    display: none;
 }
 
 //myinfo-password

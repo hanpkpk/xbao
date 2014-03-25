@@ -360,9 +360,13 @@ module.exports = {
             }];
             CartModel.findCarts(where, include, function(err, carts) {
                 if (carts) {
+                    var cartArr = [];
+                    for (var i = 0; i < carts.length; i++) {
+                        cartArr.push(mapper.cartObjectMapper(carts[i]));
+                    }
                     res.json({
                         code: 200,
-                        cartList: carts
+                        cartList: cartArr
                     });
                 } else {
                     res.json({

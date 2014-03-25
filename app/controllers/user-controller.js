@@ -293,7 +293,7 @@ module.exports = {
                         as: 'item'
                     }];
                     var orderBy = 'created_at DESC';
-                    OrderModel.findOrders(option, include, orderBy, function(err, orders) {
+                    OrderModel.findOrders(option, include, null, orderBy, function(err, orders) {
                         UserModel.findUserById(userId, function(err, user) {
                             if (orders) {
                                 var orderList = [];
@@ -332,7 +332,7 @@ module.exports = {
             UserModel.findUserById(userId, function(err, user) {
                 if (user) {
                     var orderBy = 'created_at DESC';
-                    OrderModel.findOrders(option, include, orderBy, function(err, orders) {
+                    OrderModel.findOrders(option, include, null, orderBy, function(err, orders) {
                         if (orders) {
                             var orderList = [];
                             for (var i = 0; i < orders.length; i++) {
@@ -454,4 +454,34 @@ module.exports = {
             }
         });
     },
+    getOrders: function(req, res, next) {
+        var userId = req.user.id;
+
+        var option = {
+            buyer_id: userId
+        };
+        var include = [{
+            model: Store,
+            as: 'store'
+        }, {
+            model: Item,
+            as: 'item'
+        }];
+        var order = 'created_at DESC';
+
+        OrderModel.findOrders(option, include, 4, order, function(err, orders) {
+            if (orders) {
+                var orderArr = [];
+                for (var i = 0; i < orders.length; i++) {
+                    orderArr.push(mapper.orderObjectMapper(orders[i]));
+                }
+                res.json({
+                    code: 200,
+                    orderList: orderArr
+                });
+            } else {
+                res.json(500);
+            }
+        });
+    }
 };

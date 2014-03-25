@@ -108,6 +108,7 @@ module.exports = function(app) {
     app.post('/order/operate', controller.ensureAuthenticated, userController.operateOrder);
     app.delete('/order/delete', controller.ensureAuthenticated, userController.deleteOrder);
     app.get('/order/:id', autoLogin, controller.ensureAuthenticated, userController.orderInfoPage);
+    app.post('/order/get', controller.ensureAuthenticated, userController.getOrders);
 
     app.get('/register', userController.registerPage);
     app.post('/register', userController.register);

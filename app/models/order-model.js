@@ -55,7 +55,7 @@ module.exports = {
             callback(err);
         });
     },
-    findOrders: function(where, include, filter, callback) {
+    findOrders: function(where, include, limit, filter, callback) {
         var option = {};
         if (where) {
             option.where = where;
@@ -65,6 +65,9 @@ module.exports = {
         }
         if (filter) {
             option.order = filter;
+        }
+        if (limit) {
+            option.limit = limit;
         }
         Order.findAll(option).success(function(orders) {
             if (orders.length) {

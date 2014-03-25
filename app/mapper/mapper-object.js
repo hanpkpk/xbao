@@ -39,10 +39,10 @@ module.exports = {
             orderObject.buyer = orderEntity.buyer;
         }
         if (orderEntity.item) {
-            orderObject.item = orderEntity.item;
+            orderObject.item = this.itemObjectMapper(orderEntity.item);
         }
         if (orderEntity.store) {
-            orderObject.store = orderEntity.store;
+            orderObject.store = this.storeObjectMapper(orderEntity.store);
         }
         return orderObject;
     },
@@ -87,10 +87,10 @@ module.exports = {
             cartObject.buyer = cartEntity.buyer;
         }
         if (cartEntity.item) {
-            cartObject.item = cartEntity.item;
+            cartObject.item = this.itemObjectMapper(cartEntity.item);
         }
         if (cartEntity.store) {
-            cartObject.store = cartEntity.store;
+            cartObject.store = this.storeObjectMapper(cartEntity.store);
         }
         return cartObject;
     }
