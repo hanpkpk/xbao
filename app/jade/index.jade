@@ -56,7 +56,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.shoes
                         for title in indexList
                             if title.categoryId == 2
@@ -66,7 +66,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.shoes
                         for title in indexList
                             if title.categoryId == 2
@@ -76,7 +76,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.ornament
                         for title in indexList
                             if title.categoryId == 3
@@ -86,7 +86,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.appliance
                         for title in indexList
                             if title.categoryId == 4
@@ -96,7 +96,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.digital
                         for title in indexList
                             if title.categoryId == 5
@@ -106,7 +106,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.textile
                         for title in indexList
                             if title.categoryId == 6
@@ -116,7 +116,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.furniture
                         for title in indexList
                             if title.categoryId == 7
@@ -126,7 +126,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.food
                         for title in indexList
                             if title.categoryId == 8
@@ -136,7 +136,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                     div.all-thing-detail.life
                         for title in indexList
                             if title.categoryId == 9
@@ -146,7 +146,7 @@ block main
                                         for product in productList
                                             if product.belong == title.belong
                                                 li
-                                                    a #{product.name}
+                                                    a(href='/items?class=#{product.id}') #{product.name}
                 div.banner-display.col-xs-7
                     ul.bxslider
                         img(src="/static/img/index/banner1.jpg" alt="")
@@ -209,59 +209,32 @@ block main
                                     option 100元
                             a.btn.btn-warning.btn-sm.btn-phone 充值
             div.extension.col-xs-12
-                div.extension-banner.col-xs-9
-                    div.extension-title
-                        ul.ul-extension.col-xs-12
-                            li#extension-newThing.active.col-xs-3 新品上架
-                            li#extension-recommend.col-xs-3 推荐商品
-                            li#extension-hot.col-xs-3 热门商品
-                            li.col-xs-3
-                    div.extension-container
-                        div.extension-newThing
-                            div#owl-example.owl-carousel
-                                div.extension-item-container
-                                    img(src="/static/img/thumbnail/product1.jpg")
-                                    div.extension-product-title 商品名称dsadasd
-                                    div.extension-product-price
-                                        i.fa.fa-cny  179.
-                                            small 00
-                                div.extension-item-container
-                                    img(src="/static/img/thumbnail/product2.jpg")
-                                    div.extension-product-title 商品名称
-                                    div.extension-product-price
-                                        i.fa.fa-cny  16.
-                                            small 00
-                                div.extension-item-container
-                                    img(src="/static/img/thumbnail/product3.jpg")
-                                    div.extension-product-title 商品名称
-                                    div.extension-product-price
-                                        i.fa.fa-cny  88.
-                                            small 00
-                                div.extension-item-container
-                                    img(src="/static/img/thumbnail/product4.jpg")
-                                    div.extension-product-title 商品名称
-                                    div.extension-product-price
-                                        i.fa.fa-cny  3213.
-                                            small 00
-                                div.extension-item-container
-                                    img(src="/static/img/thumbnail/product5.jpg")
-                                    div.extension-product-title 商品名称
-                                    div.extension-product-price
-                                        i.fa.fa-cny  1564.
-                                            small 00
-                                div.extension-item-container
-                                    img(src="/static/img/thumbnail/product6.jpg")
-                                    div.extension-product-title 商品名称
-                                    div.extension-product-price
-                                        i.fa.fa-cny  5.
-                                            small 00
-                                div.extension-item-container
-                                    img(src="/static/img/thumbnail/product7.jpg")
-                                    div.extension-product-title 商品名称
-                                    div.extension-product-price
-                                        i.fa.fa-cny  89.
-                                            small 90
-                        div.extension-recommend
-                        div.extension-hot
-                div.convenience-contianer.col-xs-3
-                    
+                div.extension-container
+                    div.extension-title 1F 服装内衣
+                    img.col-xs-4(src='/static/img/index/cloth1.png')
+                    div.col-xs-3
+                        div.extension-cloth-female
+                            div 女士上衣
+                            ul
+                                for product in productList
+                                    if product.belong == '女士上衣'
+                                        li
+                                            a(href='/items?class=#{product.id}') #{product.name}
+                        div.extension-cloth-male dsada
+                    img.col-xs-5(src='/static/img/index/cloth2.png')
+                div.extension-container
+                    div.extension-title 2F 鞋包配饰
+                div.extension-container
+                    div.extension-title 3F 饰品手表
+                div.extension-container
+                    div.extension-title 4F 家电
+                div.extension-container
+                    div.extension-title 5F 手机数码
+                div.extension-container
+                    div.extension-title 6F 家纺
+                div.extension-container
+                    div.extension-title 7F 家具
+                div.extension-container
+                    div.extension-title 8F 日用百货
+                div.extension-container
+                    div.extension-title 9F 食品

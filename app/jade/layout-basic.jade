@@ -13,6 +13,8 @@ block body
                             a(href='/user/#{credential.id}') #{credential.name}
                         li
                             a.logout.logout-btn(href='/logout',style='margin-left:-12px;') [注销]
+                        li
+                            a(href='/user/#{credential.id}') 已买到的商品
                     else
                         li
                             a(href='/') 请登录

@@ -256,53 +256,31 @@
 .extension {
     display: inline-block;
     padding: 0px;
-    .extension-banner {
-        padding: 0px;
+    .extension-container{
+        display: inline-block;
+        width: 100%;
         .extension-title {
-            ul {
-                display: inline-block;
-                li {
-                    font-size: 16px;
-                    text-align: center;
-                    z-index: 56;
-                    height:40px;
-                    line-height: 40px;
-                    background-color: #eee;
-                    float: left;
-                    border-bottom: 1px solid #a05;
-                    &.active {
-                        border-top: 1px solid #a05;
-                        border-left: 1px solid #a05;
-                        border-right: 1px solid #a05;
-                        border-bottom: 0px;
-                        background-color: white;
-                    }
-                }
-            }
+            margin: 10px 0px;
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 5px;
+            border-bottom: 3px solid #a05;
+        }
+        .extension-cloth-female {
+            width: 100%;
+            margin: 0px 10px;
+            height: 248px;
+            background-color: #eee;
+            padding: 10px;
+        }
+        .extension-cloth-male {
+            padding: 10px;
+            width: 100%;
+            margin: 10px 10px 0px 10px;
+            height: 250px;
+            background-color: #eee;
         }
     }
-}
-.extension-item-container {
-    text-align: center;
-    .extension-product-title {
-        padding: 10px 0px 5px 20px;
-        text-align: left;
-    }
-    
-    .extension-product-price {
-        padding-left: 20px;
-        text-align: left;
-        font-size: 18px;
-        color: #f10;
-    }
-    &:hover {
-        cursor: pointer;
-    }
-}
-
-.convenience-contianer {
-    height: 271px;
-    background-color: #123456;
 }
 
 @media (max-width:776px) {
@@ -310,5 +288,8 @@
         .search-button {
             padding: 0px 10px;
         }
+    }
+    .extension-cloth-male,.extension-cloth-female {
+        height: 210px !important;
     }
 }

@@ -20,6 +20,7 @@ var modifyPrice = function(price) {
 module.exports = {
     productObjectMapper: function(productEntity) {
         var productObject = {};
+        productObject.id = productEntity.id;
         productObject.name = productEntity.name;
         productObject.belong = productEntity.belong;
         productObject.isShow = productEntity.isShow;

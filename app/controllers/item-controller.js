@@ -258,12 +258,22 @@ module.exports = {
         });
     },
     itemListPage: function(req, res, next) {
-        var searchVal = req.query.key;
-        var url = req.path + '?key=' + searchVal;
+        var searchVal = req.query.key || null;
+        var classVal = req.query.class || null;
         var sort = req.query.sort || null;
         var sortBy = ['salesVolume desc', 'salesVolume asc', 'price desc', 'price asc', 'created_at desc', 'created_at asc'];
-
-        var where = ["goods.name LIKE '%" + searchVal + "%'"];
+        var url;
+        var where;
+        if (searchVal) {
+            url = req.path + '?key=' + searchVal;
+            where = ["goods.name LIKE '%" + searchVal + "%'"];
+        }
+        if (classVal) {
+            url = req.path + '?class=' + classVal;
+            where = {
+                product_id: classVal
+            };
+        }
         var orderBy = null;
         var include = [{
             model: Store,

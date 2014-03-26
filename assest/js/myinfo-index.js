@@ -1,6 +1,7 @@
 $(function() {
     var storeId = $('.user-info-store-id');
     var $itemSellTemplate = $('#item-sell-template');
+    var $itemBuyTemplate = $('#item-buy-template');
 
     $.ajax({
         url: '/store/item/getnew',
@@ -73,10 +74,32 @@ $(function() {
             if (data.code == 200) {
                 if (data.orderList.length) {
                     for (var i = 0; i < data.orderList.length; i++) {
-                        var itemContainer = $itemSellTemplate.clone();
-                        itemContainer.find('a').attr('href', '/item/' + data.orderList[i].item.id);
-                        itemContainer.find('.small-container-image').attr('src', data.orderList[i].item.imageList[0].path);
-                        itemContainer.find('.small-container-name').text(data.orderList[i].item.name);
+                        var itemContainer = $itemBuyTemplate.clone();
+                        var status = '';
+                        itemContainer.find('.buy-item-name').attr('href', '/item/' + data.orderList[i].item.id);
+                        itemContainer.find('.userinfo-buy-img').attr('src', data.orderList[i].item.imageList[0].path);
+                        itemContainer.find('.buy-item-name').text(data.orderList[i].item.name);
+                        if (data.orderList[i].status == -1) {
+                            status = '交易取消';
+                        }
+                        if (data.orderList[i].status === 0) {
+                            status = '待付款';
+                        }
+                        if (data.orderList[i].status == 1) {
+                            status = '交易成功';
+                        }
+                        if (data.orderList[i].status == 2) {
+                            status = '待卖家发货';
+                        }
+                        if (data.orderList[i].status == 3) {
+                            status = '待收货';
+                        }
+                        if (data.orderList[i].status == 4) {
+                            status = '待评价';
+                        }
+                        itemContainer.find('.buy-item-status').text(status);
+                        itemContainer.find('.buy-item-number').text(data.orderList[i].number);
+                        itemContainer.find('.buy-item-price').text('￥' + data.orderList[i].price);
                         itemContainer.attr('id', null);
                         _userinfo.find('.samll-container').append(itemContainer);
                     }
