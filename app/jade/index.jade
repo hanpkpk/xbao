@@ -214,13 +214,31 @@ block main
                     img.col-xs-4(src='/static/img/index/cloth1.png')
                     div.col-xs-3
                         div.extension-cloth-female
-                            div 女士上衣
-                            ul
+                            div.extension-samll-title 女士上衣
+                            ul.extension-product
                                 for product in productList
                                     if product.belong == '女士上衣'
-                                        li
+                                        li.extension-product-name
                                             a(href='/items?class=#{product.id}') #{product.name}
-                        div.extension-cloth-male dsada
+                            div.extension-samll-title 女士裤装
+                            ul.extension-product
+                                for product in productList
+                                    if product.belong == '女士裤装'
+                                        li.extension-product-name
+                                            a(href='/items?class=#{product.id}') #{product.name}
+                        div.extension-cloth-male
+                            div.extension-samll-title 男士上装
+                            ul.extension-product
+                                for product in productList
+                                    if product.belong == '男士上装'
+                                        li.extension-product-name
+                                            a(href='/items?class=#{product.id}') #{product.name}
+                            div.extension-samll-title 男士裤装
+                            ul.extension-product
+                                for product in productList
+                                    if product.belong == '男士裤装'
+                                        li.extension-product-name
+                                            a(href='/items?class=#{product.id}') #{product.name}
                     img.col-xs-5(src='/static/img/index/cloth2.png')
                 div.extension-container
                     div.extension-title 2F 鞋包配饰
