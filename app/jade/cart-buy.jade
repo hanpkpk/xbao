@@ -45,6 +45,8 @@ block main
                     div.buy-input #{cart.order.number}
                 div.col-xs-2
                     div.buy-item-total #{cart.order.price}
+            span 留言: 
+            input(type='text',class='#{cart.order.id}',style='width:40%;margin-bottom:10px')
         div.order-buy.col-xs-12
             div.buy-comment.col-xs-7
             div.buy-price.col-xs-5

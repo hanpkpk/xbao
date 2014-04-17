@@ -13,16 +13,20 @@ $(function() {
 
     $buyBtn.on('click', function() {
         if (confirm('确认要购买吗？')) {
-            var orderIdArr = [];
+            var orderArr = [];
             for (var i = 0; i < $orderId.length; i++) {
-                orderIdArr.push($orderId.eq(i).val());
+                var comment = $('.' + $orderId.eq(i).val()).val();
+                orderArr.push({
+                    id: $orderId.eq(i).val(),
+                    comment: comment
+                });
             }
             $.ajax({
                 url: '/order/create?many=true',
                 type: 'post',
                 dataType: 'json',
                 data: {
-                    orderId: orderIdArr
+                    orderId: orderArr
                 },
                 success: function(data) {
                     if (data == 200) {

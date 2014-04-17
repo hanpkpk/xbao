@@ -169,13 +169,13 @@ block main
                                             span
                                                 a(href='/user/#{credential.id}') [查看]
                                 div.col-xs-12
-                                    a.export.user-info-container.col-xs-4
+                                    a.export.user-info-container.col-xs-4(href='/user/#{credential.id}/orderlist')
                                         div.user-info-number 0
                                         div.user-info-word 待发货
-                                    a.inport.user-info-container.col-xs-4
+                                    a.inport.user-info-container.col-xs-4(href='/user/#{credential.id}/orderlist')
                                         div.user-info-number 0
                                         div.user-info-word 待收货
-                                    a.comment.user-info-container.col-xs-4
+                                    a.comment.user-info-container.col-xs-4(href='/user/#{credential.id}/orderlist')
                                         div.user-info-number 0
                                         div.user-info-word 待评价
                                 

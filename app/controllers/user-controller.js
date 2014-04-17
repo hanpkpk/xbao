@@ -207,8 +207,9 @@ module.exports = {
             for (var i = 0; i < orderIdArr.length; i++) {
                 var newObj = {
                     status: 2,
-                }
-                OrderModel.updateOrder(newObj, orderIdArr[i], function(err) {
+                    comments: orderIdArr[i].comment
+                };
+                OrderModel.updateOrder(newObj, orderIdArr[i].id, function(err) {
                     if (err) {
                         console.log(err);
                         res.json(500);
@@ -219,10 +220,12 @@ module.exports = {
         } else {
             var price = _str.trim(req.body.price);
             var number = _str.trim(req.body.number);
+            var comment = req.body.comment;
             var newObj = {
                 price: price,
                 status: 2,
-                number: number
+                number: number,
+                comments: comment
             };
             OrderModel.updateOrder(newObj, orderIdArr, function(err) {
                 if (!err) {

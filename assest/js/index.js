@@ -99,5 +99,4 @@ $(function() {
             _singinError.show();
         }
     });
-
 });

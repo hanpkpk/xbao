@@ -63,7 +63,8 @@ $(function() {
                 data: {
                     orderId: $('#order-id').val(),
                     price: $price.text(),
-                    number: $inputNumber.val()
+                    number: $inputNumber.val(),
+                    comment: $('#input-comment').val()
                 },
                 success: function(data) {
                     if (data == 200) {
