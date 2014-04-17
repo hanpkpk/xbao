@@ -210,9 +210,8 @@ block main
                             a.btn.btn-warning.btn-sm.btn-phone 充值
             div.extension.col-xs-12
                 div.extension-container
-                    div.extension-title 1F 服装内衣
-                    img.col-xs-4(src='/static/img/index/cloth1.png')
-                    div.col-xs-3
+                    div.col-xs-2
+                        div.extension-title 1F 服装内衣
                         div.extension-cloth-female
                             div.extension-samll-title 女士上衣
                             ul.extension-product
@@ -226,6 +225,12 @@ block main
                                     if product.belong == '女士裤装'
                                         li.extension-product-name
                                             a(href='/items?class=#{product.id}') #{product.name}
+                    div.extension-cloth-female-wapper.col-xs-4
+                        ul.extension-cloth-female-slider
+                            img(src='/static/img/index/female-cloth1.png')
+                            img(src='/static/img/index/female-cloth2.jpg')
+                            img(src='/static/img/index/female-cloth3.jpg')
+                    div.col-xs-6
                         div.extension-cloth-male
                             div.extension-samll-title 男士上装
                             ul.extension-product
@@ -239,7 +244,16 @@ block main
                                     if product.belong == '男士裤装'
                                         li.extension-product-name
                                             a(href='/items?class=#{product.id}') #{product.name}
-                    img.col-xs-5(src='/static/img/index/cloth2.png')
+                            div.extension-samll-title 男士内衣
+                            ul.extension-product
+                                for product in productList
+                                    if product.belong == '男士内衣'
+                                        li.extension-product-name
+                                            a(href='/items?class=#{product.id}') #{product.name}
+                        ul.extension-cloth-male-slider
+                            img(src='/static/img/index/male-cloth1.jpg')
+                            img(src='/static/img/index/male-cloth2.jpg')
+                            img(src='/static/img/index/male-cloth3.jpg')
                 div.extension-container
                     div.extension-title 2F 鞋包配饰
                 div.extension-container

@@ -14,16 +14,21 @@ $(function() {
 
     $('.bxslider').bxSlider({
         mode: 'fade',
-        autoControlsCombine: true,
-        auto: true,
-        useCSS: false
+        auto: true
     });
 
-    $("#owl-example").owlCarousel({
-        pagination: false,
-        autoPlay: true,
-        stopOnHover: true,
-        itemsDesktop: [2000, 4]
+    $('.extension-cloth-male-slider').bxSlider({
+        auto: true,
+        mode: 'vertical',
+        controls: false,
+        pause: 5600
+    });
+
+    $('.extension-cloth-female-slider').bxSlider({
+        auto: true,
+        controls: false,
+        pause: 5500,
+        delay: 600
     });
 
     $('.bx-controls-direction').hide();

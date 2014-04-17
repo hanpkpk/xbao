@@ -158,6 +158,7 @@
     .bx-viewport {
         border: 0px;
         left:0;
+        box-shadow: none;
     }
     .bx-pager{
         top:90%;
@@ -260,26 +261,29 @@
         display: inline-block;
         width: 100%;
         .extension-title {
-            margin: 10px 0px;
-            font-size: 16px;
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 150px;
+            background-color: #D8A4A4;
+            font-size: 25px;
             font-weight: bold;
-            padding-bottom: 5px;
-            border-bottom: 3px solid #a05;
+            color: #fff;
         }
         .extension-cloth-female {
             width: 100%;
-            margin: 0px 10px;
-            height: 248px;
-            background-color: #E9E0FF;
+            margin-top: 5px;
+            height: 345px;
+            background-color: #E5EBF1;
             padding: 10px;
             overflow: hidden;
         }
         .extension-cloth-male {
-            padding: 10px;
-            width: 100%;
-            margin: 10px 10px 0px 10px;
-            height: 250px;
-            background-color: #E5EBF1;
+            padding-left: 10px;
+            margin-left: 5px;
+            height: 190px;
+            background-color: #F1ECFF;
             overflow: hidden;
         }
     }
@@ -289,7 +293,7 @@
     font-weight: bold;
     color: #A5948C;
     font-size: 14px;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
 .extension-product {
@@ -298,13 +302,15 @@
         float: left;
         padding: 0px 10px;
         margin: 3px 0px;
-        border-right: 1px solid #666;
-        &:last-child {
-            border-right: 0px;
-        }
         a {
             color: #555;
         }
+    }
+}
+
+.extension-cloth-female-wapper {
+    .bx-wrapper {
+        margin: 0px 0px 0px 5px;
     }
 }
 
@@ -313,8 +319,5 @@
         .search-button {
             padding: 0px 10px;
         }
-    }
-    .extension-cloth-male,.extension-cloth-female {
-        height: 210px !important;
     }
 }
